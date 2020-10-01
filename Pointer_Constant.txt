@@ -1,0 +1,17 @@
+Types of Pointer concept available:
+
+
+1)            Pointers to Constant
+    ---------------------------------------------
+     const <pointer-type>* <pointer-name
+
+
+2)           Constant Pointers
+    -----------------------------------------------
+     <pointer-type> *const <pointer-name>
+
+
+3)       Constant Pointers to Pointers  
+    -------------------------------------------------
+    
+    const <pointer-type>* const <pointer-name>
