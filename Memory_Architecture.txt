@@ -1,0 +1,67 @@
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+                                                  Memory Allocation
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+There are primarily 2 types of memory w.r.t a program :
+
+Static Memory
+Dynamic Memory
+
+
+Static Memory
+--------------
+Whenever a variable or array is created the memory allocated is either on a Data Segment or on stack. 
+This allocation is called Static Memory Allocation (during the compilation time).
+
+Dynamic Memory
+------------------
+Heap memory is a huge memory that still remains unused in our system.
+Available at Runtime only.
+Accessing Heap Memory only possible through Pointers only.
+
+
+What happens during memory allocation
+--------------------------------------
+
+Whenever a variable / array created it is simply stored in stack part of memory so its readily available at ease.
+What happens when the same variable is stored in the form of Pointers.??
+
+The variable value is stored onto the heap, but the actual reference (or memory address) of the variable gets stored in Stack.
+So, whenever it has to access such a variable, processor first goes to the stack to fetch its addr. and then to Heap
+to obtain its value corresponding to the addr.
+
+--------------------------
+     Architecture
+---------------------------
+
+
+                             --------------------------
+Higher M/M Addr                     Cmd Line Args
+                              -------------------------
+                                    (stack)
+                                      |                       } functions related data
+                                      | 
+                                      V
+
+                                      ^
+                                      |
+                                      |                       }  Available through Pointers only.            
+                                    (heap)
+                              ------------------------
+                                    BSS Segment               }   Un-Initialized Part
+                              ------------------------
+                                   Data Segment                }   Initialized Part
+                              ------------------------
+                                   Code Segment                } Prog. Statements (in the form of Machine Code)
+                              ------------------------
+Lower M/m Addr                         OS
+                              ------------------------
+
+
+
+
+                                             
