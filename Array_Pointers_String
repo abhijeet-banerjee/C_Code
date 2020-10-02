@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 10
+
+char *arrPtrStr(int);
+void disp(char *[]);
+char *names[MAX];
+
+int main()
+{
+    char n[2];
+        printf("\nHow many records?\n");
+gets(n);
+char *p =arrPtrStr(atoi(n));         // atoi() FUNCTION CONVERTS STRING TO INTEGER IN C.
+disp(p);
+
+    return 0;
+}
+
+char *arrPtrStr(int n)
+{
+    int i;
+    char str[30];
+
+    for(i=0;i<n;i++)
+    {
+        printf("Enter name %d\n",(i+1));
+        gets(str);
+        // Allocate memory to the array of pointers to a string.
+        names[i]=(char *)malloc(sizeof(strlen(str)));
+        strcpy(names[i],str);
+        
+    }
+    return (char *)names;
+}
+
+void disp(char *x[])   // Receiving an array of pointers to string.
+{
+ int i;
+ i=0;
+ printf("\n\nPrinting names...............\n\n");
+ while(x[i])
+ {
+     printf("%s\n",x[i]);
+     i++;
+ }
+    
+}
