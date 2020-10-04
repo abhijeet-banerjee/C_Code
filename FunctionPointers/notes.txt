@@ -1,0 +1,19 @@
+
+  --------------------------------------------------------------------------------------
+                             Function Pointers
+ -----------------------------------------------------------------------------------------
+
+
+1. Unlike the normal pointers, the function pointers points to the code and not the data.
+   Typically points to the start of the executable code.
+
+2. Unlike normal pointers, we do not allocate/deallocate memory when using function pointers.
+
+3. Array of Pointers pointing to functions..... May serve as an alternative to switch case.
+
+void (*fun_ptr[])(int,int) = {add,substract,multiply};
+
+For calling, for example.
+(*fun_ptr[1])(45,78) etc.
+
+4. A function pointer can even be passed as an argument to a another function.
