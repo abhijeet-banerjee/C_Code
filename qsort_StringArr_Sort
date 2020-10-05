@@ -1,0 +1,39 @@
+/******************************************************************************
+Program to implement sorting  using qsort() for an string array
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int mycomparator(const void *p, const void *q)
+{
+      return (strcmp((*(char **)p),(*(char **)q)));             // De-referencing afterwards castinbg is done
+}
+
+int main()
+{
+int i;
+char n[2];
+printf("\nEnter the size of the array??\n");
+gets(n);
+int num=atoi(n);
+char *names[num];
+char str[20];
+for(i=0;i<num;i++)
+{
+    printf("\nEnter the name %d\n",(i+1));
+   gets(str);
+    // Allocate memory for each member of the array of pointers to structures.
+    names[i]=(char *)malloc(sizeof(strlen(str)));
+    strcpy(names[i],str);
+}
+qsort(names,num,(sizeof(char *)),mycomparator);
+
+printf("\n\nAfter Sorting\n\n");
+for(i=0;i<num;i++)
+{
+    puts(names[i]);
+}
+    return 0;
+}
