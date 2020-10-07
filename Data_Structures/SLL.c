@@ -1,6 +1,5 @@
 /******************************************************************************
                       SLL Implemntation with core features
-
 *******************************************************************************/
 
 #include <stdio.h>
@@ -9,25 +8,25 @@
 struct Node
 {
     int data;
-    struct Node *next;
+    struct Node* next;
 };
 
-struct Node *root = NULL;
+struct Node* root = NULL;
 
 void append()
 {
-     struct Node *p,*tmp;
-    tmp = (struct Node *)malloc(sizeof(struct Node));
+    struct Node* p, * tmp;
+    tmp = (struct Node*)malloc(sizeof(struct Node));
     printf("\nEnter the value for the node to be appended??\n");
-    scanf("%d",&tmp->data);
-    tmp->next=NULL;
-    if(root == NULL)
+    scanf("%d", &tmp->data);
+    tmp->next = NULL;
+    if (root == NULL)
     {
-         root = tmp;
+        root = tmp;
     }
-    else{
-        p =root;
-        while(p->next!=NULL)
+    else {
+        p = root;
+        while (p->next != NULL)
         {
             p = p->next;
         }
@@ -37,10 +36,10 @@ void append()
 
 int length()
 {
-    struct Node *p;
-    p =root;
-    int count=0;
-    while(p){
+    struct Node* p;
+    p = root;
+    int count = 0;
+    while (p) {
         p = p->next;
         count++;
     }
@@ -49,61 +48,61 @@ int length()
 
 void afterwards()
 {
-    struct Node *p,*tmp;
+    struct Node* p, * tmp;
     int pos;
-      printf("\nEnter the position for the node??\n");
-    scanf("%d",&pos);
-    tmp = (struct Node *)malloc(sizeof(struct Node));
-    printf("\nEnter the value for the node to be inserted afterwards node %d??\n",pos);
-    scanf("%d",&tmp->data);
-    tmp->next=NULL;
+    printf("\nEnter the position for the node??\n");
+    scanf("%d", &pos);
+    tmp = (struct Node*)malloc(sizeof(struct Node));
+    printf("\nEnter the value for the node to be inserted afterwards node %d??\n", pos);
+    scanf("%d", &tmp->data);
+    tmp->next = NULL;
     // Node Prepared by now.
-if(pos>0 && pos<=length())
-       {
-           if(root == NULL)
-      {
-          root = tmp;
-      }
-      else
-      {
-          int i=1;
-          p =root;
-          while(i<pos)
-          {
-              p = p->next;
-              i++;
-          }
-                  tmp->next=p->next;
-          p->next=tmp;
-      }
-      
-       }
-       else
-       {
-           printf("\nInvalid position\n");
-       }
+    if (pos > 0 && pos <= length())
+    {
+        if (root == NULL)
+        {
+            root = tmp;
+        }
+        else
+        {
+            int i = 1;
+            p = root;
+            while (i < pos)
+            {
+                p = p->next;
+                i++;
+            }
+            tmp->next = p->next;
+            p->next = tmp;
+        }
+
+    }
+    else
+    {
+        printf("\nInvalid position\n");
+    }
 }
 
 void start()
 {
-        struct Node *tmp;
-    tmp = (struct Node *)malloc(sizeof(struct Node));
+    struct Node* tmp;
+    tmp = (struct Node*)malloc(sizeof(struct Node));
     printf("\nEnter the value for the node to be inserted at beginning??\n");
-    scanf("%d",&tmp->data);
-    tmp->next=NULL;
-    tmp -> next =root;
+    scanf("%d", &tmp->data);
+    tmp->next = NULL;
+    tmp->next = root;
     root = tmp;
 }
 
 void reverse_sll()
 {
-    int i=0,j=length()-1,k,tmp;
-    struct Node *p,*q;
+    int i = 0, j = length() - 1, k, tmp;
+    struct Node* p, * q;
     p = q = root;
-    while(i<j)
+    while (i < j)
     {
-        k=0;
-        while(k<j)
+        k = 0;
+        while (k < j)
         {
             q = q->next;
             k++;
@@ -111,29 +110,29 @@ void reverse_sll()
         tmp = p->data;
         p->data = q->data;
         q->data = tmp;
-        
+
         i++;
         j--;
         p = p->next;
-        q=root;
-        
+        q = root;
+
     }
 }
 
 void sort()
 {
-    int i,j,tmp;
-    struct Node *p, *q;
+    int i, j, tmp;
+    struct Node* p, * q;
     p = root;
-    while(p != NULL)
+    while (p != NULL)
     {
-       for(q = p->next;q!=NULL;q=q->next)
+        for (q = p->next; q != NULL; q = q->next)
         {
-            if(p->data > q->data)
+            if (p->data > q->data)
             {
-       tmp = p->data;
-        p->data = q->data;
-        q->data = tmp; 
+                tmp = p->data;
+                p->data = q->data;
+                q->data = tmp;
             }
         }
         p = p->next;
@@ -142,130 +141,145 @@ void sort()
 
 void print()
 {
-   struct Node *p;
-   p = root;
-   if(root == NULL)  printf("\nList empty\n");
-   while(p!=NULL)
-   {
-       printf("%d --->> ",p->data);
-       p=p->next;
-   }
-   printf("\n");
+    struct Node* p;
+    p = root;
+    if (root == NULL)
+    {
+        printf("\nList empty\n");
+    }
+    while (p != NULL)
+    {
+        printf("%d --->> ", p->data);
+        p = p->next;
+    }
+    printf("\n");
 }
 
 void deleteStart()
 {
-    struct Node *p;
-if(root == NULL)
-{
-    printf("\nNothing to delete as LL is empty\n");
-}
-else
-{
-      p=root;
-    root = p->next;
-    free(p);  
-}
+    struct Node* p;
+    if (root == NULL)
+    {
+        printf("\nNothing to delete as LL is empty\n");
+    }
+    else
+    {
+        p = root;
+        root = p->next;
+        free(p);
+    }
 
 }
 
 
 void deleteLast()
 {
-    struct Node *p;
-if(root == NULL)
-{
-    printf("\nList empty\n");
-    exit(0);
-}
-if(length()==1)
-deleteStart();
-else
-{
-        p =root;
-    while(p->next->next != NULL)
+    struct Node *p,*q;
+    int i = 0, j = 0;
+    if (root == NULL)
     {
-        p = p->next;
+        printf("\nList empty\n");
+        exit(0);
     }
-    
-    p->next = NULL;
-}
+    if (length() == 1)
+        deleteStart();
+    else
+    {
+        p = q = root;
+        while (p->next!=NULL)
+        {
+            p = p->next;
+            i++;
+        }
+        while (j < (length() - 2))
+        {
+            q = q->next;
+            j++;
+        }
+        q->next = NULL;
+        free(p);
+    }
 
 }
 
 
 void deleteAnywhere()
 {
-     struct Node *p;
-     int pos,i=0;
-     if(root == NULL)
-  {
-    printf("\nList empty\n");
-    exit(0);
-   }
-if(pos == 1)
-deleteStart();
-if(pos == length())
-deleteLast();
-else
-{
-  printf("\nEnter the position of the node??\n");
-  scanf("%d",&pos);
-  p =root;
-  while(i<(pos-1))
-  {
-      p = p->next;
-      i++;
-      
-  }
-  p->next = p->next->next;
-  free(p->next);
-}
-     
+    struct Node *p,*q;
+    int pos, i=0,j = 0;
+    printf("\nEnter the position of the node??\n");
+    scanf("%d", &pos);
+    if (root == NULL)
+    {
+        printf("\nList empty\n");
+        exit(0);
+    }
+    if (pos == 1)
+        deleteStart();
+    if (pos == length())
+        deleteLast();
+    else
+    {
+        p = q = root;
+        while (i < (pos - 1))
+        {
+            p = p->next;
+            i++;
+        }
+        while(j < (pos - 2))
+        {
+            q = q->next;
+            j++;
+        }
+        q->next = p->next;
+        p->next = NULL;
+        free(p);
+    }
+
 }
 
 int main()
 {
-int ch;
-while(1)
-{
-    printf("\n1.Append\n2.AddAnywhere\n3.Length\n4.Add at starting\n5.Print\n6.Reverse SLL\n7.Sort\n8.Delete at Start\n9. Delete at Last\n10.Delete Anywhere\n11.Exit\n\n");
-    scanf("%d",&ch);
-    switch(ch)
+    int ch;
+    while (1)
     {
+        printf("\n1.Append\n2.AddAnywhere\n3.Length\n4.Add at starting\n5.Print\n6.Reverse SLL\n7.Sort\n8.Delete at Start\n9. Delete at Last\n10.Delete Anywhere\n11.Exit\n\n");
+        scanf("%d", &ch);
+        switch (ch)
+        {
         case 1: append();
-        break;
-        
+            break;
+
         case 2: afterwards();
-        break;
-        
-        case 3:  printf("Length = %d ",length());
-        break;
-        
+            break;
+
+        case 3:  printf("Length = %d ", length());
+            break;
+
         case 4: start();
-        break;
-        
+            break;
+
         case 5: print();
-        break;
-        
+            break;
+
         case 6: reverse_sll();
-        break;
-        
+            break;
+
         case 7: sort();
-        break;
-        
+            break;
+
         case 8: deleteStart();
-        break;
-        
+            break;
+
         case 9: deleteLast();
-        break;
-        
+            break;
+
         case 10: deleteAnywhere();
-        break;
-        
+            break;
+
         case 11: exit(0);
-        break;
+            break;
+        }
     }
-}
-return 0;
+    return 0;
 }
