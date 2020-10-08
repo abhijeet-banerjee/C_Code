@@ -50,7 +50,7 @@ void afterwards()
 {
     struct Node* p, * tmp;
     int pos;
-    printf("\nEnter the position for the node??\n");
+    printf("\nEnter after which position node has to be added??\n");
     scanf("%d", &pos);
     tmp = (struct Node*)malloc(sizeof(struct Node));
     printf("\nEnter the value for the node to be inserted afterwards node %d??\n", pos);
