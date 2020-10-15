@@ -75,7 +75,7 @@ void appendPoly1(int n, char polyVar)
     }
 }
 
-void printPoly1(int n,char polyVar)
+void printPoly1(int n)
 {
     struct Poly1* p;
     if (root1 == NULL)
@@ -87,11 +87,9 @@ void printPoly1(int n,char polyVar)
     {
         int nc = 0;
         p = root1;
-        p->var = polyVar;
         while (p != NULL && n>=0)
         {
             nc++;
-            p->power = n--;
             if (p->data > 0)
             {
 
@@ -111,7 +109,7 @@ void printPoly1(int n,char polyVar)
             }
 
 
-            if(p->data < 0)
+           else if(p->data < 0)
             {
                 if (p->power == 1)
                 {
@@ -124,11 +122,6 @@ void printPoly1(int n,char polyVar)
                     (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
                 }
 
-            }
-
-            if (p->data == 0)
-            {
-                continue;
             }
 
             p = p->right;
@@ -151,8 +144,8 @@ void appendPoly2(int n, char polyVar)
         printf("\nEnter the %d term coefficient value??\n", i);
         scanf("%d", &tmp2[i]->data);
         getchar();
-        tmp1[i]->var = polyVar;
-        tmp1[i]->power = n--;
+        tmp2[i]->var = polyVar;
+        tmp2[i]->power = n--;
         tmp2[i]->left = NULL;
         tmp2[i]->right = NULL;
         // By this time we prepared the node.
@@ -177,7 +170,7 @@ void appendPoly2(int n, char polyVar)
 }
 
 
-void printPoly2(int n,char polyVar)
+void printPoly2(int n)
 {
     struct Poly2* p;
     if (root2 == NULL)
@@ -191,9 +184,7 @@ void printPoly2(int n,char polyVar)
         p = root2;
         while (p != NULL && n>=0)
         {
-            p->var = polyVar;
             nc++;
-            p->power = n--;
             if (p->data > 0)
             {
 
@@ -213,7 +204,7 @@ void printPoly2(int n,char polyVar)
             }
 
 
-            if(p->data < 0)
+           else
             {
                 if (p->power == 1)
                 {
@@ -228,10 +219,6 @@ void printPoly2(int n,char polyVar)
 
             }
 
-            if (p->data == 0)
-            {
-                continue;
-            }
             p = p->right;
         }
     }
@@ -243,10 +230,15 @@ void appendPolyAddition(int n,char polyVar)
     struct Poly3* p;
         for (i = n; i >= 0; i--)
         {
+            if((tmp1[i]->data + tmp2[i]->data) == 0 )
+            {
+                n--;
+                continue;
+            }
             tmp3[i] = (struct Poly3*)malloc(sizeof(struct Poly3));
             tmp3[i]->data = tmp1[i]->data + tmp2[i]->data;
-            tmp3[i]->var = tmp1[i]->var;
-            tmp3[i]->power = tmp1[i]->power;
+            tmp3[i]->var = polyVar;
+            tmp3[i]->power = n--;
             tmp3[i]->left = NULL;
             tmp3[i]->right = NULL;
             // By this time we prepared the node.
@@ -270,7 +262,7 @@ void appendPolyAddition(int n,char polyVar)
         }
 }
 
-void printPolyAddition(int n, char polyVar)
+void printPoly(int n)
 {
 struct Poly3* p;
     if (root3 == NULL)
@@ -282,12 +274,10 @@ struct Poly3* p;
     {
         int nc = 0;
         p = root3;
-        p->var = polyVar;
         while (p != NULL && n>=0)
         {
             nc++;
-            p->power = n--;
-            if (p->data >= 0)
+            if (p->data > 0)
             {
 
                 if (p->power == 1)
@@ -306,7 +296,7 @@ struct Poly3* p;
             }
 
 
-            if (p->data < 0)
+          else
             {
                 if (p->power == 1)
                 {
@@ -334,7 +324,7 @@ void main()
     printf("\nSupply n-th degree polynomial to be created?\n");
     scanf("%d", &n);
     getchar();
-    printf("\nEnter the underlying variable for Polynomial??\n");
+    printf("\nEnter the underlying variable for both of the Polynomials??\n");
     scanf("%c", &polyVar);
     getchar();
     appendPoly1(n,polyVar);
@@ -343,13 +333,13 @@ void main()
          printf("\n\n=====================RESULT================================\n\n");
          printf("\t");
          printf("(");
-    printPoly1(n,polyVar);
+    printPoly1(n);
     printf(")");
     printf(" + ");
     printf("(");
-    printPoly2(n,polyVar);
+    printPoly2(n);
     printf(")");
         printf("  =  ");
-     printPolyAddition(n,polyVar);
+     printPoly(n);
      
 }
