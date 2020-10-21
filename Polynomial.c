@@ -40,14 +40,26 @@ struct Poly4
     struct Node* right;
 };
 
+
+struct Poly5
+{
+    int data;
+    char var;
+    int power;
+    struct Node* left;
+    struct Node* right;
+};
+
 struct Poly1* root1 = NULL;
 struct Poly2* root2 = NULL;
 struct Poly3* root3 = NULL;
 struct Poly4* root4 = NULL;
+struct Poly5* root5 = NULL;
 struct Poly1* tmp1[100];
 struct Poly2* tmp2[100];
 struct Poly3* tmp3[100];
 struct Poly4* tmp4[100];
+struct Poly5* tmp5[100];
 
 void appendPoly1(int n, char polyVar)
 {
@@ -421,6 +433,111 @@ void printPolySubs(int n)
     }
 }
 
+void appendPolyMultiply(int n, char polyVar)
+{
+    int k=0;
+    struct Poly5* p;
+    struct Poly1* p1;
+    struct Poly2 *p2,*z;
+    p1 = root1, p2 = root2;
+    z = p2;
+        while (p1 != NULL)
+        {
+            while (p2 != NULL && (k<= (n+1)* (n + 1)))
+            {
+                tmp5[k] = (struct Poly5*)malloc(sizeof(struct Poly5));
+                if (p1->data * p2->data == 0)
+                {
+                    continue;
+                }
+                tmp5[k]->data = p1->data * p2->data;
+                tmp5[k]->var = polyVar;
+                tmp5[k]->power = (p1->power + p2->power);
+
+                // Now appending.
+                if (root5 == NULL)
+                {
+                    root5 = tmp5[k];
+
+                }
+
+                else
+                {
+                    p = root5;
+                    while (p->right != NULL)
+                    {
+                        p = p->right;
+                    }
+                    // Making Right link connection is more important
+                    p->right = tmp5[k];
+                    tmp5[k]->left = p;
+
+                }
+                p2 = p2->right;
+                k++;
+            }
+            p2 = z;
+            p1 = p1->right;
+        }
+    }
+       
+
+
+void printPolyMultiplication(int n)
+{
+    struct Poly5* p;
+    if (root5 == NULL)
+    {
+        printf("\nPolynomial is empty !!\n");
+    }
+
+    else
+    {
+        int nc = 0;
+        p = root5;
+        while (p != NULL && n >= 0)
+        {
+            nc++;
+            if (p->data > 0)
+            {
+
+                if (p->power == 1)
+                {
+                    (nc == 1) ? ((p->data == 1) ? (printf("%c", p->var)) : (printf("%d%c", p->data, p->var))) : ((p->data == 1) ? (printf("+%c", p->var)) : (printf("+%d%c", p->data, p->var)));
+                }
+                else if (p->power == 0)
+                {
+                    (nc == 1) ? printf("%d", p->data) : printf("+%d", p->data);
+                }
+                else
+                {
+                    (nc == 1) ? ((p->data == 1) ? (printf("%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power))) : ((p->data == 1) ? (printf("+%c^%d", p->var, p->power)) : (printf("+%d%c^%d", p->data, p->var, p->power)));
+                }
+
+            }
+
+
+            else
+            {
+                if (p->power == 1)
+                {
+                    (p->data == -1) ? (printf("-%c", p->var)) : (printf("%d%c", p->data, p->var));
+                }
+                else if (p->power == 0)
+                    printf("%d", p->data);
+                else
+                {
+                    (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
+                }
+
+            }
+
+            p = p->right;
+        }
+        printf("\n\n");
+    }
+}
+
 void main()
 {
     int n,ch;
@@ -428,7 +545,7 @@ void main()
 
     while (1)
     {
-        printf("\n1.Add Poly\n2.Substract Poly\n3.Exit\n\n");
+        printf("\n1.Add Poly\n2.Substract Poly\n3.Multiply\n4.Exit\n\n");
         scanf("%d", &ch);
         switch (ch) {
         case 1:
@@ -475,7 +592,29 @@ void main()
             printf("  =  ");
             printPolySubs(n);
             break;
-        case 3: exit(0);
+        case 3:
+            printf("\nSupply n-th degree polynomial to be created?\n");
+            scanf("%d", &n);
+            getchar();
+            printf("\nEnter the underlying variable for both of the Polynomials??\n");
+            scanf("%c", &polyVar);
+            getchar();
+            appendPoly1(n, polyVar);
+            appendPoly2(n, polyVar);
+            appendPolyMultiply(n, polyVar);
+            printf("\n\n===========================<<<RESULT>>>=================================\n\n");
+            printf("\t");
+            printf("(");
+            printPoly1(n);
+            printf(")");
+            printf(" X ");
+            printf("(");
+            printPoly2(n);
+            printf(")");
+            printf("  =  ");
+            printPolyMultiplication(n);
+            break;
+        case 4: exit(0);
         default: printf("\nInvalid  Choice entered\n");
         }
     }
