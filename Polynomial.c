@@ -50,16 +50,27 @@ struct Poly5
     struct Node* right;
 };
 
+struct Poly6
+{
+    int data;
+    char var;
+    int power;
+    struct Node* left;
+    struct Node* right;
+};
+
 struct Poly1* root1 = NULL;
 struct Poly2* root2 = NULL;
 struct Poly3* root3 = NULL;
 struct Poly4* root4 = NULL;
 struct Poly5* root5 = NULL;
+struct Poly6* root6 = NULL;
 struct Poly1* tmp1[100];
 struct Poly2* tmp2[100];
 struct Poly3* tmp3[100];
 struct Poly4* tmp4[100];
 struct Poly5* tmp5[100];
+
 
 void appendPoly1(int n, char polyVar)
 {
@@ -483,10 +494,59 @@ void appendPolyMultiply(int n, char polyVar)
        
 
 
+void equation(int n,char polyVar)
+{
+    struct Poly5 *p,*z;
+    struct Poly6 *w,*x;
+           p = root5;
+           z = p;
+    w = root6;
+    int pw,s=0;
+    for(pw=(2*n);pw>=0;pw--)
+    {
+        s =0;
+         x = (struct Poly6*)malloc(sizeof(struct Poly6));
+      while(p)
+      {
+            if(p->power == pw)
+            {
+            s= s+(p->data);
+           }
+       p = p->right;
+      }
+      x->data = s;
+      x->var = polyVar;
+      x->power = pw;
+        x->left = NULL;
+            x->right = NULL;
+                      if (root6 == NULL)
+                {
+                    root6 = x;
+
+                }
+
+                else
+                {
+                    w = root6;
+                    while (w->right != NULL)
+                    {
+                        w = w->right;
+                    }
+                    // Making Right link connection is more important
+                    w->right = x;
+                    x->left = w;
+
+                }
+             p =z;       
+    }
+    }
+
+
+
 void printPolyMultiplication(int n)
 {
-    struct Poly5* p;
-    if (root5 == NULL)
+    struct Poly6* p;
+    if (root6 == NULL)
     {
         printf("\nPolynomial is empty !!\n");
     }
@@ -494,7 +554,7 @@ void printPolyMultiplication(int n)
     else
     {
         int nc = 0;
-        p = root5;
+        p = root6;
         while (p != NULL && n >= 0)
         {
             nc++;
@@ -612,6 +672,7 @@ void main()
             printPoly2(n);
             printf(")");
             printf("  =  ");
+            equation(n,polyVar);
             printPolyMultiplication(n);
             break;
         case 4: exit(0);
