@@ -1,10 +1,10 @@
 /******************************************************************************
-                                Add Two Polynomials
+                    Polynomial  Arithmetic
 *******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Poly1
+struct Poly
 {
     int data;
     char var;
@@ -13,63 +13,67 @@ struct Poly1
     struct Node* right;
 };
 
-struct Poly2
+struct Poly* root1 = NULL;
+struct Poly* root2 = NULL;
+struct Poly* root3 = NULL;
+struct Poly* root4 = NULL;
+
+void printPoly(int n, struct Poly *x)
 {
-    int data;
-    char var;
-    int power;
-    struct Node* left;
-    struct Node* right;
-};
+       struct Poly* p;
+    if (x == NULL)
+    {
+        printf("\nPolynomial is empty !!\n");
+    }
 
-struct Poly3
-{
-    int data;
-    char var;
-    int power;
-    struct Node* left;
-    struct Node* right;
-};
+    else
+    {
+        int nc = 0;
+        p = x;
+            printf("( ");
+        while (p != NULL)
+        {
+            nc++;
+            if (p->data > 0)
+            {
 
-struct Poly4
-{
-    int data;
-    char var;
-    int power;
-    struct Node* left;
-    struct Node* right;
-};
+                if (p->power == 1)
+                {
+                    (nc == 1) ? ((p->data == 1) ? (printf("%c", p->var)) : (printf("%d%c", p->data, p->var))) : ((p->data == 1) ? (printf("+%c", p->var)) : (printf("+%d%c", p->data, p->var)));
+                }
+                else if (p->power == 0)
+                {
+                    (nc == 1) ? printf("%d", p->data) : printf("+%d", p->data);
+                }
+                else
+                {
+                    (nc == 1) ? ((p->data == 1) ? (printf("%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power))) : ((p->data == 1) ? (printf("+%c^%d", p->var, p->power)) : (printf("+%d%c^%d", p->data, p->var, p->power)));
+                }
+
+            }
 
 
-struct Poly5
-{
-    int data;
-    char var;
-    int power;
-    struct Node* left;
-    struct Node* right;
-};
+            else
+            {
+                if (p->power == 1)
+                {
+                    (p->data == -1) ? (printf("-%c", p->var)) : (printf("%d%c", p->data, p->var));
+                }
+                else if (p->power == 0)
+                    printf("%d", p->data);
+                else
+                {
+                    (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
+                }
 
-struct Poly6
-{
-    int data;
-    char var;
-    int power;
-    struct Node* left;
-    struct Node* right;
-};
+            }
 
-struct Poly1* root1 = NULL;
-struct Poly2* root2 = NULL;
-struct Poly3* root3 = NULL;
-struct Poly4* root4 = NULL;
-struct Poly5* root5 = NULL;
-struct Poly6* root6 = NULL;
-struct Poly1* tmp1[100];
-struct Poly2* tmp2[100];
-struct Poly3* tmp3[100];
-struct Poly4* tmp4[100];
-struct Poly5* tmp5[100];
+            p = p->right;
+        }
+       printf(" )  ");
+    }
+    
+}
 
 
 void appendPoly1(int n, char polyVar)
@@ -77,21 +81,21 @@ void appendPoly1(int n, char polyVar)
     int i;
     printf("\n---\tPolynomial 1\t---\n");
     printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-    struct Poly1* p;
+    struct Poly *p,*tmp1;
     for (i = n; i >= 0; i--)
     {
-        tmp1[i] = (struct Poly1*)malloc(sizeof(struct Poly1));
+        tmp1 = (struct Poly*)malloc(sizeof(struct Poly));
         printf("\nEnter the %d term coefficient value??\n", i);
-        scanf("%d", &tmp1[i]->data);
+        scanf("%d", &tmp1->data);
         getchar();
-        tmp1[i]->var = polyVar;
-        tmp1[i]->power = n--;
-        tmp1[i]->left = NULL;
-        tmp1[i]->right = NULL;
+        tmp1->var = polyVar;
+        tmp1->power = n--;
+        tmp1->left = NULL;
+        tmp1->right = NULL;
         // By this time we prepared the node.
         if (root1 == NULL)
         {
-            root1 = tmp1[i];
+            root1 = tmp1;
         }
 
         else
@@ -102,67 +106,11 @@ void appendPoly1(int n, char polyVar)
                 p = p->right;
             }
             // Making Right link connection is more important
-            p->right = tmp1[i];
-            tmp1[i]->left = p;
+            p->right = tmp1;
+            tmp1->left = p;
         }
 
     }
-}
-
-void printPoly1(int n)
-{
-    struct Poly1* p;
-    if (root1 == NULL)
-    {
-        printf("\nPolynomial is empty !!\n");
-    }
-
-    else
-    {
-        int nc = 0;
-        p = root1;
-        while (p != NULL && n >= 0)
-        {
-            nc++;
-            if (p->data > 0)
-            {
-
-                if (p->power == 1)
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c", p->var)) : (printf("%d%c", p->data, p->var))) : ((p->data == 1) ? (printf("+%c", p->var)) : (printf("+%d%c", p->data, p->var)));
-                }
-                else if (p->power == 0)
-                {
-                    (nc == 1) ? printf("%d", p->data) : printf("+%d", p->data);
-                }
-                else
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power))) : ((p->data == 1) ? (printf("+%c^%d", p->var, p->power)) : (printf("+%d%c^%d", p->data, p->var, p->power)));
-                }
-
-            }
-
-
-            else if (p->data < 0)
-            {
-                if (p->power == 1)
-                {
-                    (p->data == -1) ? (printf("-%c", p->var)) : (printf("%d%c", p->data, p->var));
-                }
-                else if (p->power == 0)
-                    printf("%d", p->data);
-                else
-                {
-                    (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
-                }
-
-            }
-
-            p = p->right;
-        }
-
-    }
-
 }
 
 
@@ -171,21 +119,21 @@ void appendPoly2(int n, char polyVar)
     int i;
     printf("\n---\tPolynomial 2\t---\n");
     printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-    struct Poly2* p;
+    struct Poly *p,*tmp2;
     for (i = n; i >= 0; i--)
     {
-        tmp2[i] = (struct Poly2*)malloc(sizeof(struct Poly2));
+        tmp2 = (struct Poly*)malloc(sizeof(struct Poly));
         printf("\nEnter the %d term coefficient value??\n", i);
-        scanf("%d", &tmp2[i]->data);
+        scanf("%d", &tmp2->data);
         getchar();
-        tmp2[i]->var = polyVar;
-        tmp2[i]->power = n--;
-        tmp2[i]->left = NULL;
-        tmp2[i]->right = NULL;
+        tmp2->var = polyVar;
+        tmp2->power = n--;
+        tmp2->left = NULL;
+        tmp2->right = NULL;
         // By this time we prepared the node.
         if (root2 == NULL)
         {
-            root2 = tmp2[i];
+            root2 = tmp2;
         }
 
         else
@@ -196,89 +144,41 @@ void appendPoly2(int n, char polyVar)
                 p = p->right;
             }
             // Making Right link connection is more important
-            p->right = tmp2[i];
-            tmp2[i]->left = p;
+            p->right = tmp2;
+            tmp2->left = p;
         }
 
     }
+
 }
 
-
-void printPoly2(int n)
-{
-    struct Poly2* p;
-    if (root2 == NULL)
-    {
-        printf("\nPolynomial is empty !!\n");
-    }
-
-    else
-    {
-        int nc = 0;
-        p = root2;
-        while (p != NULL && n >= 0)
-        {
-            nc++;
-            if (p->data > 0)
-            {
-
-                if (p->power == 1)
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c", p->var)) : (printf("%d%c", p->data, p->var))) : ((p->data == 1) ? (printf("+%c", p->var)) : (printf("+%d%c", p->data, p->var)));
-                }
-                else if (p->power == 0)
-                {
-                    (nc == 1) ? printf("%d", p->data) : printf("+%d", p->data);
-                }
-                else
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power))) : ((p->data == 1) ? (printf("+%c^%d", p->var, p->power)) : (printf("+%d%c^%d", p->data, p->var, p->power)));
-                }
-
-            }
-
-
-            else
-            {
-                if (p->power == 1)
-                {
-                    (p->data == -1) ? (printf("-%c", p->var)) : (printf("%d%c", p->data, p->var));
-                }
-                else if (p->power == 0)
-                    printf("%d", p->data);
-                else
-                {
-                    (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
-                }
-
-            }
-
-            p = p->right;
-        }
-    }
-}
 
 void appendPolyAddition(int n, char polyVar)
 {
-    int i;
-    struct Poly3* p;
-    for (i = n; i >= 0; i--)
+    struct Poly *p1,*p2,*p,*z,*tmp;
+    p1 = root1;
+    p2 = root2;
+    z = p2;
+    while(p1)
     {
-        if ((tmp1[i]->data + tmp2[i]->data) == 0)
+          tmp = (struct Poly*)malloc(sizeof(struct Poly));
+        while(p2)
+        {
+            
+        if ((p1->data + p2->data) == 0)
         {
             n--;
             continue;
         }
-        tmp3[i] = (struct Poly3*)malloc(sizeof(struct Poly3));
-        tmp3[i]->data = tmp1[i]->data + tmp2[i]->data;
-        tmp3[i]->var = polyVar;
-        tmp3[i]->power = n--;
-        tmp3[i]->left = NULL;
-        tmp3[i]->right = NULL;
+        tmp->data = p1->data + p2->data;
+        tmp->var = polyVar;
+        tmp->power = n--;
+        tmp->left = NULL;
+        tmp->right = NULL;
         // By this time we prepared the node.
         if (root3 == NULL)
         {
-            root3 = tmp3[i];
+            root3 = tmp;
         }
 
         else
@@ -289,199 +189,101 @@ void appendPolyAddition(int n, char polyVar)
                 p = p->right;
             }
             // Making Right link connection is more important
-            p->right = tmp3[i];
-            tmp3[i]->left = p;
+            p->right = tmp;
+            tmp->left = p;
         }
-
-    }
-}
-
-void printPolyAddition(int n)
-{
-    struct Poly3* p;
-    if (root3 == NULL)
-    {
-        printf("\nPolynomial is empty !!\n");
-    }
-
-    else
-    {
-        int nc = 0;
-        p = root3;
-        while (p != NULL && n >= 0)
-        {
-            nc++;
-            if (p->data > 0)
-            {
-
-                if (p->power == 1)
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c", p->var)) : (printf("%d%c", p->data, p->var))) : ((p->data == 1) ? (printf("+%c", p->var)) : (printf("+%d%c", p->data, p->var)));
-                }
-                else if (p->power == 0)
-                {
-                    (nc == 1) ? printf("%d", p->data) : printf("+%d", p->data);
-                }
-                else
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power))) : ((p->data == 1) ? (printf("+%c^%d", p->var, p->power)) : (printf("+%d%c^%d", p->data, p->var, p->power)));
-                }
-
-            }
-
-
-            else
-            {
-                if (p->power == 1)
-                {
-                    (p->data == -1) ? (printf("-%c", p->var)) : (printf("%d%c", p->data, p->var));
-                }
-                else if (p->power == 0)
-                    printf("%d", p->data);
-                else
-                {
-                    (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
-                }
-
-            }
-
-            p = p->right;
-        }
-        printf("\n\n");
-    }
+         p2 = p2->right;
+      }   // inner while
+    p2 = z;
+    p1 = p1->right;
+    
+    }       // outer while
 }
 
 void appendPolySubs(int n, char polyVar)
 {
-    int i;
-    struct Poly4* p;
-    for (i = n; i >= 0; i--)
+     struct Poly *p1,*p2,*p,*z,*tmp;
+    p1 = root1;
+    p2 = root2;
+    z = p2;
+    while(p1)
     {
-        if ((tmp1[i]->data - tmp2[i]->data) == 0)
+        while(p2)
+        {
+            
+        if ((p1->data - p2->data) == 0)
         {
             n--;
             continue;
         }
-        tmp4[i] = (struct Poly4*)malloc(sizeof(struct Poly4));
-        tmp4[i]->data = tmp1[i]->data - tmp2[i]->data;
-        tmp4[i]->var = polyVar;
-        tmp4[i]->power = n--;
-        tmp4[i]->left = NULL;
-        tmp4[i]->right = NULL;
+        tmp = (struct Poly*)malloc(sizeof(struct Poly));
+        tmp->data = p1->data + p2->data;
+        tmp->var = polyVar;
+        tmp->power = n--;
+        tmp->left = NULL;
+        tmp->right = NULL;
         // By this time we prepared the node.
-        if (root4 == NULL)
+        if (root3 == NULL)
         {
-            root4 = tmp4[i];
+            root3 = tmp;
         }
 
         else
         {
-            p = root4;
+            p = root3;
             while (p->right != NULL)
             {
                 p = p->right;
             }
             // Making Right link connection is more important
-            p->right = tmp4[i];
-            tmp4[i]->left = p;
+            p->right = tmp;
+            tmp->left = p;
         }
-
-    }
+         p2 = p2->right;
+      }   // inner while
+    p2 = z;
+    p1 = p1->right;
+    
+    }       // outer while
 }
 
-void printPolySubs(int n)
-{
-    struct Poly4* p;
-    if (root4 == NULL)
-    {
-        printf("\nPolynomial is empty !!\n");
-    }
-
-    else
-    {
-        int nc = 0;
-        p = root4;
-        while (p != NULL && n >= 0)
-        {
-            nc++;
-            if (p->data > 0)
-            {
-
-                if (p->power == 1)
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c", p->var)) : (printf("%d%c", p->data, p->var))) : ((p->data == 1) ? (printf("+%c", p->var)) : (printf("+%d%c", p->data, p->var)));
-                }
-                else if (p->power == 0)
-                {
-                    (nc == 1) ? printf("%d", p->data) : printf("+%d", p->data);
-                }
-                else
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power))) : ((p->data == 1) ? (printf("+%c^%d", p->var, p->power)) : (printf("+%d%c^%d", p->data, p->var, p->power)));
-                }
-
-            }
-
-
-            else
-            {
-                if (p->power == 1)
-                {
-                    (p->data == -1) ? (printf("-%c", p->var)) : (printf("%d%c", p->data, p->var));
-                }
-                else if (p->power == 0)
-                    printf("%d", p->data);
-                else
-                {
-                    (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
-                }
-
-            }
-
-            p = p->right;
-        }
-        printf("\n\n");
-    }
-}
 
 void appendPolyMultiply(int n, char polyVar)
 {
     int k=0;
-    struct Poly5* p;
-    struct Poly1* p1;
-    struct Poly2 *p2,*z;
+    struct Poly *p,*p1,*p2,*z,*tmp;
     p1 = root1, p2 = root2;
     z = p2;
         while (p1 != NULL)
         {
-            while (p2 != NULL && (k<= (n+1)* (n + 1)))
+            while (p2 != NULL)
             {
-                tmp5[k] = (struct Poly5*)malloc(sizeof(struct Poly5));
+                tmp = (struct Poly*)malloc(sizeof(struct Poly));
                 if (p1->data * p2->data == 0)
                 {
                     continue;
                 }
-                tmp5[k]->data = p1->data * p2->data;
-                tmp5[k]->var = polyVar;
-                tmp5[k]->power = (p1->power + p2->power);
+                tmp->data = p1->data * p2->data;
+                tmp->var = polyVar;
+                tmp->power = (p1->power + p2->power);
 
                 // Now appending.
-                if (root5 == NULL)
+                if (root3 == NULL)
                 {
-                    root5 = tmp5[k];
+                    root3 = tmp;
 
                 }
 
                 else
                 {
-                    p = root5;
+                    p = root3;
                     while (p->right != NULL)
                     {
                         p = p->right;
                     }
                     // Making Right link connection is more important
-                    p->right = tmp5[k];
-                    tmp5[k]->left = p;
+                    p->right = tmp;
+                    tmp->left = p;
 
                 }
                 p2 = p2->right;
@@ -496,16 +298,15 @@ void appendPolyMultiply(int n, char polyVar)
 
 void equation(int n,char polyVar)
 {
-    struct Poly5 *p,*z;
-    struct Poly6 *w,*x;
-           p = root5;
+    struct Poly *p,*z,*w,*x;
+           p = root3;
            z = p;
-    w = root6;
+    w = root4;
     int pw,s=0;
     for(pw=(2*n);pw>=0;pw--)
     {
         s =0;
-         x = (struct Poly6*)malloc(sizeof(struct Poly6));
+         x = (struct Poly*)malloc(sizeof(struct Poly));
       while(p)
       {
             if(p->power == pw)
@@ -519,15 +320,15 @@ void equation(int n,char polyVar)
       x->power = pw;
         x->left = NULL;
             x->right = NULL;
-                      if (root6 == NULL)
-                {
-                    root6 = x;
+                      if (root4 == NULL)
+                    {
+                    root4 = x;
 
-                }
+                     }
 
                 else
                 {
-                    w = root6;
+                    w = root4;
                     while (w->right != NULL)
                     {
                         w = w->right;
@@ -541,66 +342,9 @@ void equation(int n,char polyVar)
     }
     }
 
-
-
-void printPolyMultiplication(int n)
-{
-    struct Poly6* p;
-    if (root6 == NULL)
-    {
-        printf("\nPolynomial is empty !!\n");
-    }
-
-    else
-    {
-        int nc = 0;
-        p = root6;
-        while (p != NULL && n >= 0)
-        {
-            nc++;
-            if (p->data > 0)
-            {
-
-                if (p->power == 1)
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c", p->var)) : (printf("%d%c", p->data, p->var))) : ((p->data == 1) ? (printf("+%c", p->var)) : (printf("+%d%c", p->data, p->var)));
-                }
-                else if (p->power == 0)
-                {
-                    (nc == 1) ? printf("%d", p->data) : printf("+%d", p->data);
-                }
-                else
-                {
-                    (nc == 1) ? ((p->data == 1) ? (printf("%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power))) : ((p->data == 1) ? (printf("+%c^%d", p->var, p->power)) : (printf("+%d%c^%d", p->data, p->var, p->power)));
-                }
-
-            }
-
-
-            else
-            {
-                if (p->power == 1)
-                {
-                    (p->data == -1) ? (printf("-%c", p->var)) : (printf("%d%c", p->data, p->var));
-                }
-                else if (p->power == 0)
-                    printf("%d", p->data);
-                else
-                {
-                    (p->data == -1) ? (printf("-%c^%d", p->var, p->power)) : (printf("%d%c^%d", p->data, p->var, p->power));
-                }
-
-            }
-
-            p = p->right;
-        }
-        printf("\n\n");
-    }
-}
-
 void main()
 {
-    int n,ch;
+     int n,ch;
     char polyVar;
 
     while (1)
@@ -619,16 +363,12 @@ void main()
             appendPoly2(n, polyVar);
             appendPolyAddition(n, polyVar);
             printf("\n\n===========================<<<RESULT>>>=================================\n\n");
-            printf("\t");
-            printf("(");
-            printPoly1(n);
-            printf(")");
+            printPoly(n,root1);
             printf(" + ");
-            printf("(");
-            printPoly2(n);
-            printf(")");
-            printf("  =  ");
-            printPolyAddition(n);
+             printPoly(n,root2);
+            printf("  =   ");
+            printPoly(n,root3);
+              printf("\n");
             break;
         case 2:
             printf("\nSupply n-th degree polynomial to be created?\n");
@@ -641,16 +381,13 @@ void main()
             appendPoly2(n, polyVar);
             appendPolySubs(n, polyVar);
             printf("\n\n===========================<<<RESULT>>>=================================\n\n");
-            printf("\t");
-            printf("(");
-            printPoly1(n);
-            printf(")");
+            printPoly(n,root1);
             printf(" - ");
-            printf("(");
-            printPoly2(n);
+            printPoly(n,root2);
             printf(")");
-            printf("  =  ");
-            printPolySubs(n);
+            printf("  =   ");
+            printPoly(n,root3);
+              printf("\n");
             break;
         case 3:
             printf("\nSupply n-th degree polynomial to be created?\n");
@@ -663,17 +400,13 @@ void main()
             appendPoly2(n, polyVar);
             appendPolyMultiply(n, polyVar);
             printf("\n\n===========================<<<RESULT>>>=================================\n\n");
-            printf("\t");
-            printf("(");
-            printPoly1(n);
-            printf(")");
-            printf(" X ");
-            printf("(");
-            printPoly2(n);
-            printf(")");
-            printf("  =  ");
+            printPoly(n,root1);
+            printf(" X  ");
+            printPoly(n,root2);
+            printf("  =   ");
             equation(n,polyVar);
-            printPolyMultiplication(n);
+            printPoly(n,root4);
+            printf("\n");
             break;
         case 4: exit(0);
         default: printf("\nInvalid  Choice entered\n");
