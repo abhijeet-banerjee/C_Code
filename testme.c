@@ -13,11 +13,21 @@ struct Poly1
     struct Node* right;
 };
 
+struct Poly2
+{
+    int data;
+    char var;
+    int power;
+    struct Node* left;
+    struct Node* right;
+};
 
 
 struct Poly1* root1 = NULL;
 
-struct Poly1* tmp1[100];
+struct Poly1 *tmp1[100];
+
+struct Poly2* root2 = NULL;
 
 void appendPoly1(int n, char polyVar)
 {
@@ -115,56 +125,56 @@ void printPoly1()
 
 void equation(char polyVar)
 {
-    struct Poly1 *p,*t,*z;
-    p = root1;
-    z = p;
-    t = (struct Poly1 *)malloc(sizeof(struct Poly1));
-    t->left = NULL;
-    t->right = NULL;
-    int pw = 2,s=0;
-    while(pw>=0)
+    struct Poly1 *p,*z;
+    struct Poly2 *w,*tmp2;
+           p = root1;
+           z = p;
+    w = root2;
+    int pw,s=0;
+    for(pw=2;pw>=0;pw--)
     {
+        s =0;
+         tmp2 = (struct Poly2*)malloc(sizeof(struct Poly2));
       while(p)
       {
             if(p->power == pw)
             {
-            s+=p->data;
-            p = p->right;
+            s= s+(p->data);
            }
        p = p->right;
-      
       }
-      t->data = s;
-      t->var = polyVar;
-      t->power = pw;
-       pw--;
-                      if (root1 == NULL)
+      tmp2->data = s;
+      tmp2->var = polyVar;
+      tmp2->power = pw;
+        tmp2->left = NULL;
+            tmp2->right = NULL;
+                      if (root2 == NULL)
                 {
-                    root1 = t;
+                    root2 = tmp2;
 
                 }
 
                 else
                 {
-                    p = root1;
-                    while (p->right != NULL)
+                    w = root2;
+                    while (w->right != NULL)
                     {
-                        p = p->right;
+                        w = w->right;
                     }
                     // Making Right link connection is more important
-                    p->right = t;
-                    t->left = p;
+                    w->right = tmp2;
+                    tmp2->left = w;
 
                 }
-            p = z;
+             p =z;       
     }
     }
 
 
 void printPoly()
 {
-    struct Poly1* p;
-    if (root1 == NULL)
+    struct Poly2* p;
+    if (root2 == NULL)
     {
         printf("\nPolynomial is empty !!\n");
     }
@@ -172,7 +182,7 @@ void printPoly()
     else
     {
         int nc = 0;
-        p = root1;
+        p = root2;
         while (p != NULL)
         {
             nc++;
