@@ -13,10 +13,7 @@ struct Poly
     struct Node* right;
 };
 
-struct Poly* root1 = NULL;
-struct Poly* root2 = NULL;
-struct Poly* root3 = NULL;
-struct Poly* root4 = NULL;
+struct Poly *root1,*root2,*root3,*root4 = NULL;
 
 void printPoly(int n, struct Poly *x)
 {
@@ -155,15 +152,12 @@ void appendPoly2(int n, char polyVar)
 
 void appendPolyAddition(int n, char polyVar)
 {
-    struct Poly *p1,*p2,*p,*z,*tmp;
+    struct Poly *p1,*p2,*p,*tmp;
     p1 = root1;
     p2 = root2;
-    z = p2;
-    while(p1)
+    while(p1 && p2)
     {
           tmp = (struct Poly*)malloc(sizeof(struct Poly));
-        while(p2)
-        {
             
         if ((p1->data + p2->data) == 0)
         {
@@ -193,31 +187,26 @@ void appendPolyAddition(int n, char polyVar)
             tmp->left = p;
         }
          p2 = p2->right;
-      }   // inner while
-    p2 = z;
-    p1 = p1->right;
+        p1 = p1->right;
     
-    }       // outer while
+    }     
 }
 
 void appendPolySubs(int n, char polyVar)
 {
-     struct Poly *p1,*p2,*p,*z,*tmp;
+        struct Poly *p1,*p2,*p,*tmp;
     p1 = root1;
     p2 = root2;
-    z = p2;
-    while(p1)
+    while(p1 && p2)
     {
-        while(p2)
-        {
+          tmp = (struct Poly*)malloc(sizeof(struct Poly));
             
         if ((p1->data - p2->data) == 0)
         {
             n--;
             continue;
         }
-        tmp = (struct Poly*)malloc(sizeof(struct Poly));
-        tmp->data = p1->data + p2->data;
+        tmp->data = p1->data - p2->data;
         tmp->var = polyVar;
         tmp->power = n--;
         tmp->left = NULL;
@@ -240,11 +229,9 @@ void appendPolySubs(int n, char polyVar)
             tmp->left = p;
         }
          p2 = p2->right;
-      }   // inner while
-    p2 = z;
-    p1 = p1->right;
+        p1 = p1->right;
     
-    }       // outer while
+    } 
 }
 
 
