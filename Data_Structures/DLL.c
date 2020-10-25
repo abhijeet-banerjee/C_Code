@@ -1,3 +1,4 @@
+
 /******************************************************************************
                                  DLL Implementation
 *******************************************************************************/
@@ -132,6 +133,20 @@ printf("\nInvalid Position entered\n");
    }
 }
 
+
+void deleteLL()
+{
+   struct Node* q; 
+  
+   while (root != NULL)  
+   { 
+       q = root; 
+       root = root->right;
+       free(q); 
+
+   } 
+
+}
 
 void print()
 {
@@ -278,7 +293,7 @@ int main()
 int ch;
 while(1)
 {
-    printf("\n1.Append\n2.Add at start\n3.Print\n4.Add Anywhere\n5.Print\n6.Length\n7.Delete at Start\n8.Delete At Last\n9.Delete Anywhere\n10.Sort\n11.Exit\n\n");
+    printf("\n1.Append\n2.Add at start\n3.Print\n4.Add Anywhere\n5.Print\n6.Length\n7.Delete at Start\n8.Delete At Last\n9.Delete Anywhere\n10.Sort\n11.Delete LL\n12.Exit\n\n");
     scanf("%d",&ch);
     switch(ch){
         case 1: append();
@@ -301,8 +316,9 @@ while(1)
         break;
         case 10: sort();
         break;
-        case 11: exit(0);
+        case 11: deleteLL();
         break;
+        case 12: exit(0);
         default: printf("\nWrong Choice\n");
         break;
     }
